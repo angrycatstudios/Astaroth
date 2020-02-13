@@ -1,0 +1,9 @@
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\bin\Debug\Astaroth_Test.exe.config
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\bin\Debug\Astaroth_Test.exe
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\bin\Debug\Astaroth_Test.pdb
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\bin\Debug\Astaroth.dll
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\bin\Debug\Astaroth.pdb
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\obj\Debug\Astaroth_Test.csprojAssemblyReference.cache
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\obj\Debug\Astaroth_Test.csproj.CopyComplete
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\obj\Debug\Astaroth_Test.exe
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth_Test\obj\Debug\Astaroth_Test.pdb
