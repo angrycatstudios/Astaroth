@@ -1,0 +1,5 @@
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth\bin\Debug\Astaroth.dll
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth\bin\Debug\Astaroth.pdb
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth\obj\Debug\Astaroth.csprojAssemblyReference.cache
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth\obj\Debug\Astaroth.dll
+C:\Users\Sekâri\Documents\Visual Studio 2019\Projects\Astaroth\obj\Debug\Astaroth.pdb
