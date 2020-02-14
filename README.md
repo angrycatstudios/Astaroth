@@ -19,10 +19,10 @@ Console tests on 200x50 (10000) grids with custom passability check and simple p
 
 Work in progress, it's not production ready yet. See the source for function signatures. Astaroth_Test is a small example program to showcase things (see image below).
 
-For now, you have to instantiate a *PathFinderRectGrid2D* or the enhanced *PFRG2D_Generic* pathfinder by passing a 2D boolean matrix as parameter representing basic passability data for each grid (or without this).
+For now, you have to instantiate a *PathFinderRectGrid2D* or the enhanced *PFRG2D_Generic* pathfinder by passing a 2D boolean matrix as parameter representing basic passability data for each grid.
 
-You can then access individial grids with the *GetPathNode(int x, int y)* class method, and use *SetProperty(string propertyName, T value)* to add more data to them.
+You can then access individual grids with the *GetPathNode(int x, int y)* class method, and use *SetProperty(string propertyName, T value)* to add more data to them.
 
-*FindPath(...)* will return a *GridPath2D* instance. Check the count of its *Path* field or if the *PathEnd* field is not null to see if a path was found. You can access individual elements of the path found through Path (it's a list of PathNode2Ds).
+*FindPath(...)* will return a *GridPath2D* instance. Check the count of its *Path* field or if the *PathEnd* field is not null to see if a path was found. You can access individual elements of the path found through Path (it's a list of PathNode2Ds). Nodes are in reverse order (first one is the end of the path), you may want to reverse it first.
 
 ![Image description](_img/astaroth_test_01.png)
