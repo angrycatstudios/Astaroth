@@ -9,7 +9,7 @@ public class PFRG2D_Generic : PathFinderRectGrid2D {
 
 	public PFRG2D_Generic(bool[,] map) : base(map) { }
 
-	public List<PathNode2D> FindPath(int startX, int startY, int endX, int endY)
+	public GridPath2D FindPath(int startX, int startY, int endX, int endY)
 	{
 		Options options = new Options() {
 			enableOpenStackSorting = true

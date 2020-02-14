@@ -45,7 +45,7 @@ public class PathFinderRectGrid2D {
 		}
 	}
 
-	public List<PathNode2D> FindPath(
+	public GridPath2D FindPath(
 		int startX, int startY,
 		int endX, int endY,
 		int dirStart = 1, int dirEnd = 7, int dirStep = 2,
@@ -122,11 +122,13 @@ public class PathFinderRectGrid2D {
 		}
 
 		}
-		if (pathFound == -1) return null;
 		/// ---------
 
-		// Construct path
 		List<PathNode2D> path = new List<PathNode2D>();
+
+		/// Construct path
+		/// ---------
+		if (pathFound >= 0) {
 
 		map[processed[pathFound].X, processed[pathFound].Y].SetProperty("isPath", true);
 		path.Add(processed[pathFound]);
@@ -140,7 +142,13 @@ public class PathFinderRectGrid2D {
 			parent = processed[parent].GetInt("parent");
 		} while (parent != -1);
 
-		return path;
+		}
+		/// ---------
+
+		// Result
+		GridPath2D result = new GridPath2D(path);
+
+		return result;
 	}
 
 	public PathNode2D GetPathNode(int x, int y)

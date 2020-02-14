@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using Astaroth;
 
 namespace AstarothUnity {
@@ -17,7 +16,7 @@ public class AstarothUnityTest : MonoBehaviour {
 
 	private Texture2D[] tex;
 	private bool[,] map = null;
-	private List<PathNode2D> path;
+	private GridPath2D path;
 
 	private int startX, startY;
 	private int endX, endY;
@@ -50,8 +49,8 @@ public class AstarothUnityTest : MonoBehaviour {
 					GUI.DrawTexture(new Rect(100 + x * (gridPixelSize + gridGap), 100 + y * (gridPixelSize + gridGap), gridPixelSize, gridPixelSize), tex[map[x, y] ? 0 : 1]);
 				}
 			}
-			if (path != null) {
-				foreach (PathNode2D node in path) {
+			if (path != null && path.Path.Count > 0) {
+				foreach (PathNode2D node in path.Path) {
 					GUI.DrawTexture(new Rect(100 + node.X * (gridPixelSize + gridGap), 100 + node.Y * (gridPixelSize + gridGap), gridPixelSize, gridPixelSize), tex[2]);
 				}
 				GUI.Label(new Rect(5, 60, 512, 32), "time elapsed: " + ((t_end - t_start) * 1000).ToString() + " ms");
@@ -69,7 +68,6 @@ public class AstarothUnityTest : MonoBehaviour {
 				FindPath();
 			}
 		}
-
 		GUI.Label(new Rect(5, 40, 512, 32), "startX: " + startX + ", startY: " + startY + ", endX: " + endX + ", endY: " + endY);
 	}
 
@@ -96,7 +94,7 @@ public class AstarothUnityTest : MonoBehaviour {
 		// PathFinderRectGrid2D pathFinder = new PathFinderRectGrid2D(map);
 
 		// Generic
-		PathFinderRectGrid2D pathFinder = new PFRG2D_Generic(map);
+		PFRG2D_Generic pathFinder = new PFRG2D_Generic(map);
 
 		t_start = Time.realtimeSinceStartup;
 		path = pathFinder.FindPath(startX, startY, endX, endY);
@@ -106,7 +104,7 @@ public class AstarothUnityTest : MonoBehaviour {
 	private bool IsMouseInsideMapBounds()
 	{
 		float mouseY = Screen.height - Input.mousePosition.y;
-		return Input.mousePosition.x >= 100 && Input.mousePosition.x < 100 + mapWidth * (gridPixelSize + gridGap) && mouseY >= 100 && mouseY < mapHeight * (gridPixelSize + gridGap);
+		return Input.mousePosition.x >= 100 && Input.mousePosition.x < 100 + mapWidth * (gridPixelSize + gridGap) && mouseY >= 100 && mouseY < 100 + mapHeight * (gridPixelSize + gridGap);
 	}
 
 }

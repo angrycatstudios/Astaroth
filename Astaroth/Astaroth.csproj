@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GridPath2D.cs" />
     <Compile Include="PathNode2D.cs" />
     <Compile Include="RectGrid2DVariants\PFRG2D_Generic.cs" />
     <Compile Include="Utilities.cs" />
@@ -48,4 +49,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /y "$(TargetPath)" "F:\UnityProjects_2019_X\AstarothUnityTest\Assets\Astaroth\Plugins\"
+copy /y "$(TargetPath)" "G:\GitHub\Astaroth\Unity\Assets\Astaroth\Plugins\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

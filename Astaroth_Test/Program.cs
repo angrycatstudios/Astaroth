@@ -59,7 +59,7 @@ class Program {
 		Console.WriteLine();
 
 		PathFinderRectGrid2D pf;
-		List<PathNode2D> path = null;
+		GridPath2D path = null;
 
 		Stopwatch sw = new Stopwatch();
 
@@ -94,8 +94,8 @@ class Program {
 			break;
 		}
 
-		if (path != null) {
-			DrawPath(path);
+		if (path != null && path.Path.Count > 0) {
+			DrawPath(path.Path);
 			Console.SetCursorPosition(0, my);
 			Console.WriteLine();
 			Console.WriteLine("Path found in " + sw.ElapsedMilliseconds + " ms (" + sw.ElapsedTicks + " ticks).");
