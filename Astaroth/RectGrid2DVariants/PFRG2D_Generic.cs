@@ -9,10 +9,10 @@ public class PFRG2D_Generic : PathFinderRectGrid2D {
 
 	public PFRG2D_Generic(bool[,] map) : base(map) { }
 
-	public GridPath2D FindPath(int startX, int startY, int endX, int endY)
+	public GridPath2D FindPath(int startX, int startY, int endX, int endY, bool enableOpenStackSorting = false)
 	{
 		Options options = new Options() {
-			enableOpenStackSorting = true
+			enableOpenStackSorting = enableOpenStackSorting
 		};
 		Dictionary<string, int> sortingOptions = new Dictionary<string, int> {
 
@@ -23,7 +23,7 @@ public class PFRG2D_Generic : PathFinderRectGrid2D {
 		Dictionary<string, int> pathWeightsPrf = new Dictionary<string, int> {
 
 		};
-		return FindPath(startX, startY, endX, endY, 1, 8, 1, options, sortingOptions, passConditions, pathWeightsPrf);
+		return FindPath(startX, startY, endX, endY, true, true, options, sortingOptions, passConditions, pathWeightsPrf);
 	}
 
 	protected override void SortOpenStack(ref List<PathNode2D> stack, Dictionary<string, int> sortingOptions)
@@ -50,10 +50,7 @@ public class PFRG2D_Generic : PathFinderRectGrid2D {
 
 	protected override void AssignNodeProperties(PathNode2D node, PathNode2D parent, int d, Dictionary<string, int> passConditions, Dictionary<string, int> pathWeights)
 	{
-		node.SetProperty("dir", d);
-
-		int pathWeight = parent.GetInt("pathWeight") + d % 2;
-		node.SetProperty("pathWeight", pathWeight);
+		base.AssignNodeProperties(node, parent, d, passConditions, pathWeights);
 	}
 
 }

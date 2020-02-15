@@ -48,7 +48,8 @@ public class PathFinderRectGrid2D {
 	public GridPath2D FindPath(
 		int startX, int startY,
 		int endX, int endY,
-		int dirStart = 1, int dirEnd = 7, int dirStep = 2,
+		bool allowStraight = true,
+		bool allowDiagonal = true,
 		Options options = null,
 		Dictionary<string, int> sortingOptions = null,
 		Dictionary<string, int> passConditions = null,
@@ -58,7 +59,6 @@ public class PathFinderRectGrid2D {
 		if (map == null) throw new Exception("Map array is not initialized!");
 		if (!IsInMapBounds(startX, startY)) throw new Exception("Starting coordinates are out of map bounds!");
 		if (!IsInMapBounds(endX, endY)) throw new Exception("Target coordinates are out of map bounds!");
-		if (dirStart < 0 || dirEnd > 8) throw new Exception("Invalid directional unit vector array start/end index!");
 
 		// Clear map/path flags
 		for (int x = 0; x < mx; x++) {
@@ -92,29 +92,33 @@ public class PathFinderRectGrid2D {
 
 		// Process open stack
 		for (int i = toBeProcessed.Count - 1; i >= 0; i--) {
-			for (int d = dirStart; d <= dirEnd; d += dirStep) {
+			for (int j = 7; j >= 0; j--) {
 
-				// Pre-check
-				if (d < 0 || d > 8) throw new Exception("Directional unit vector array index out of bounds!");
+				PathNode2D node = toBeProcessed[i];
+
+				// Get direction
+				int d = dirRectGrid2DEnumHelper[node.D][j];
+				if (!allowStraight && d % 2 == 1) continue;
+				if (!allowDiagonal && d % 2 == 0) continue;
 
 				// Get & validate coords
-				int newX = toBeProcessed[i].X + dirRectGrid2D[d, 0];
-				int newY = toBeProcessed[i].Y + dirRectGrid2D[d, 1];
+				int newX = node.X + dirRectGrid2D[d, 0];
+				int newY = node.Y + dirRectGrid2D[d, 1];
 				if (!IsInMapBounds(newX, newY)) continue;
 
 				// Check conditions
 				PathNode2D mapNode = map[newX, newY];
 				if (mapNode.GetBool("isProcessed")) continue;
-				if (!VerifyPassConditions(mapNode, toBeProcessed[i], d, passConditions)) continue;
+				if (!VerifyPassConditions(mapNode, node, d, passConditions)) continue;
 
 				// Process node
 				map[newX, newY].SetProperty("isProcessed", true);
-				PathNode2D node = new PathNode2D(map[newX, newY]);
-				node.SetProperty("parent", toBeProcessed[i].GetInt("stack"));
-				node.SetProperty("stack", processed.Count);
-				AssignNodeProperties(node, toBeProcessed[i], d, passConditions, pathWeights); // use this to propagate additional data like accumulated custom weights (number of direction changes, hazards encountered, etc.) from source to target node
-				processed.Add(node);
-				toBeProcessed.Add(node);
+				PathNode2D nextNode = new PathNode2D(map[newX, newY]);
+				nextNode.SetProperty("parent", node.GetInt("stack"));
+				nextNode.SetProperty("stack", processed.Count);
+				AssignNodeProperties(nextNode, node, d, passConditions, pathWeights); // use this to propagate additional data like accumulated custom weights (number of direction changes, hazards encountered, etc.) from source to target node
+				processed.Add(nextNode);
+				toBeProcessed.Add(nextNode);
 				if (newX == endX && newY == endY) pathFound = processed.Count - 1;
 
 			}
@@ -168,7 +172,10 @@ public class PathFinderRectGrid2D {
 		return node.GetBool("isPassable");
 	}
 
-	protected virtual void AssignNodeProperties(PathNode2D node, PathNode2D parent, int d, Dictionary<string, int> passConditions, Dictionary<string, int> pathWeights) { }
+	protected virtual void AssignNodeProperties(PathNode2D node, PathNode2D parent, int d, Dictionary<string, int> passConditions, Dictionary<string, int> pathWeights)
+	{
+		node.D = d;
+	}
 
 #endregion
 

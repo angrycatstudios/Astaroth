@@ -7,13 +7,13 @@ Planned to be updated with new features (path merging, alternative path search, 
 
 Astaroth currently supports only its original purpose, which is to be an extendable, A*-based pathfinding solution for 2D rectangular grid matrices. Custom rules and options can be defined for the iterative pre-sorting, passability check, and grid data propagation functions. Detailed examples for each usage will be added later.
 
-Pre-sorting can be used to mitigate inefficiency and other issues (like "zig-zagging") arising from heuristic. Will be further optimized in the future.
+Pre-sorting can be used to optimize the heuristic for specific tasks. Will be further optimized in the future.
 
 Astaroth perfectly works with Unity (on .NET 4.x backend) either as a plugin (Astaroth.dll) or by adding the source files.
 
 ## Speed & efficiency
 
-Console tests on 200x50 (10000) grids with custom passability check and simple pre-sorting produce result for the longest paths in 15-30 ms. Unity Editor mode is slower, but builds have the same efficiency.
+Console tests on 200x50 (10000) grids with custom passability check and simple pre-sorting produce result for the longest paths in 15-25 ms, and without pre-sorting in 10-20 ms. Unity Editor mode is about 4-5 times slower, but builds have the same efficiency.
 
 ## Usage
 

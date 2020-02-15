@@ -35,12 +35,11 @@ public class ExampleCustomPathFinder : PathFinderRectGrid2D {
 
 	protected override void AssignNodeProperties(PathNode2D node, PathNode2D parent, int d, Dictionary<string, int> passConditions, Dictionary<string, int> pathWeights)
 	{
-		// Example #1: make each node remember which direction it was reached from; useful if you want to display directional arrows as path overlay, turn the unit the way it is going, etc.
-		node.SetProperty("dir", d);
-
-		// Example #2: use different path weights for straight/diagonal movement; this will eliminate "zig-zagging" if used in conjunction with weight-based open stack sorting
+		// Example #1: use different path weights for straight/diagonal movement
 		int pathWeight = parent.GetInt("pathWeight") + d % 2;
 		node.SetProperty("pathWeight", pathWeight);
+
+		base.AssignNodeProperties(node, parent, d, passConditions, pathWeights);
 	}
 
 }

@@ -68,12 +68,12 @@ class Program {
 		// Only straight directions
 		case 0:
 			pf = new PathFinderRectGrid2D(map);
-			path = pf.FindPath(0, 0, mx - 1, my - 1);
+			path = pf.FindPath(0, 0, mx - 1, my - 1, true, false);
 			break;
 		// All 8 directions
 		case 1:
 			pf = new PathFinderRectGrid2D(map);
-			path = pf.FindPath(0, 0, mx - 1, my - 1, 1, 8, 1);
+			path = pf.FindPath(0, 0, mx - 1, my - 1, true, true);
 			break;
 		// Example special usage:
 		// -- eliminate zig-zagging by weighting moves based on being diagonal or not, and pre-sorting the open stack;
@@ -81,15 +81,16 @@ class Program {
 		// Since we do not differentiate between the "cost" of a straight and a diagonal move, this will result in the pathfinder moving diagonally just before it would "hit" an obstacle,
 		// to save the one extra move that would arise from not being able to move diagonally to evade the obstacle when it's next to it.
 		case 2:
-			pf = new ExampleCustomPathFinder(map);
+			// pf = new ExampleCustomPathFinder(map);
+			pf = new PFRG2D_Generic(map);
 			PathFinderRectGrid2D.Options options = new PathFinderRectGrid2D.Options() {
-				enableOpenStackSorting = true
+				enableOpenStackSorting = false // Not used anymore in this example since sorting-free anti-zigzag mode has been implemented.
 			};
 			Dictionary<string, int> passConditions = new Dictionary<string, int> {
 				{"diagonalBlocking", 1}
 			};
 			sw.Start();
-			path = pf.FindPath(0, 0, mx - 1, my - 1, 1, 8, 1, options, null, passConditions, null);
+			path = pf.FindPath(0, 0, mx - 1, my - 1, true, true, options, null, passConditions, null);
 			sw.Stop();
 			break;
 		}
@@ -121,7 +122,7 @@ class Program {
 		foreach (PathNode2D node in path) {
 			Console.SetCursorPosition(node.X, node.Y);
 			Console.ForegroundColor = ConsoleColor.Green;
-			Console.Write("O");
+			Console.Write(node.D);
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
 	}
