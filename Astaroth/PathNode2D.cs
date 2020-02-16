@@ -8,6 +8,7 @@ public class PathNode2D {
 
 	public int X { get; }
 	public int Y { get; }
+	public int Dist { get; set; }
 	public int Dir { get; set; }
 
 	protected Dictionary<string, int>		properties_i = new Dictionary<string, int>();

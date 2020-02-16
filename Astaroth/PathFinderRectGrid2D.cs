@@ -116,6 +116,7 @@ public class PathFinderRectGrid2D {
 				PathNode2D nextNode = new PathNode2D(map[newX, newY]);
 				nextNode.SetProperty("parent", node.GetInt("stack"));
 				nextNode.SetProperty("stack", processed.Count);
+				SetDistance(nextNode, node);
 				AssignNodeProperties(nextNode, node, d, passConditions, pathWeights); // use this to propagate additional data like accumulated custom weights (number of direction changes, hazards encountered, etc.) from source to target node
 				processed.Add(nextNode);
 				toBeProcessed.Add(nextNode);
@@ -170,6 +171,11 @@ public class PathFinderRectGrid2D {
 	protected virtual bool VerifyPassConditions(PathNode2D node, PathNode2D parent, int d, Dictionary<string, int> passConditions)
 	{
 		return node.GetBool("isPassable");
+	}
+
+	protected virtual void SetDistance(PathNode2D node, PathNode2D parent)
+	{
+		node.Dist = parent.Dist + 1;
 	}
 
 	protected virtual void AssignNodeProperties(PathNode2D node, PathNode2D parent, int d, Dictionary<string, int> passConditions, Dictionary<string, int> pathWeights)
