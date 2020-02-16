@@ -122,7 +122,7 @@ class Program {
 		foreach (PathNode2D node in path) {
 			Console.SetCursorPosition(node.X, node.Y);
 			Console.ForegroundColor = ConsoleColor.Green;
-			Console.Write(node.D);
+			Console.Write(node.Dir);
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
 	}

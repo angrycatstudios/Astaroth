@@ -97,7 +97,7 @@ public class PathFinderRectGrid2D {
 				PathNode2D node = toBeProcessed[i];
 
 				// Get direction
-				int d = dirRectGrid2DEnumHelper[node.D][j];
+				int d = dirRectGrid2DEnumHelper[node.Dir][j];
 				if (!allowStraight && d % 2 == 1) continue;
 				if (!allowDiagonal && d % 2 == 0) continue;
 
@@ -174,7 +174,7 @@ public class PathFinderRectGrid2D {
 
 	protected virtual void AssignNodeProperties(PathNode2D node, PathNode2D parent, int d, Dictionary<string, int> passConditions, Dictionary<string, int> pathWeights)
 	{
-		node.D = d;
+		node.Dir = d;
 	}
 
 #endregion
