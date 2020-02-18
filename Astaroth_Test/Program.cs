@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Astaroth;
+using Astaroth.Grid2D;
 
 namespace Astaroth_Test {
 
@@ -13,19 +13,15 @@ class Program {
 
 		do {
 			Console.Clear();
-			TestPathFinderRectGrid2D(2, 2); // <-- set mapMode & testMode arguments here!
+			TestPathFinderRectGrid2D(2, 2, 150, 30, 7); // <-- set mapMode & testMode arguments here!
 			Console.WriteLine();
 			Console.WriteLine("Press any key to run another test, or [ESC] to exit!");
 		} while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 	}
 
-	private static void TestPathFinderRectGrid2D(int mapMode, int testMode)
+	private static void TestPathFinderRectGrid2D(int mapMode, int testMode, int mx = 100, int my = 25, int passabilityRate = 5)
 	{
 		Random random = new Random();
-
-		const int mx = 200;
-		const int my = 50;
-		const int passabilityRate = 5;
 
 		Console.BufferWidth = Console.WindowWidth = mx + 1;
 		Console.BufferHeight = Console.WindowHeight = my + 10;
@@ -119,6 +115,7 @@ class Program {
 
 	private static void DrawPath(List<PathNode2D> path)
 	{
+		path.Reverse();
 		foreach (PathNode2D node in path) {
 			Console.SetCursorPosition(node.X, node.Y);
 			Console.ForegroundColor = ConsoleColor.Green;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Astaroth {
+namespace Astaroth.Grid2D {
 
 [Serializable()]
 public class GridPath2D {

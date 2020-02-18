@@ -41,11 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GridPath2D.cs" />
-    <Compile Include="PathNode2D.cs" />
-    <Compile Include="RectGrid2DVariants\PFRG2D_Generic.cs" />
+    <Compile Include="Graph\BellmanFord.cs" />
+    <Compile Include="Graph\Graph.cs" />
+    <Compile Include="Graph\GraphLink.cs" />
+    <Compile Include="Graph\GraphNode.cs" />
+    <Compile Include="Grid2D\GridPath2D.cs" />
+    <Compile Include="Grid2D\PathNode2D.cs" />
+    <Compile Include="Grid2D\RectGrid2DVariants\PFRG2D_Generic.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="PathFinderRectGrid2D.cs" />
+    <Compile Include="Grid2D\PathFinderRectGrid2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

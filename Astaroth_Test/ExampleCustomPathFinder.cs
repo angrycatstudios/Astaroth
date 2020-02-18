@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Astaroth;
+using Astaroth.Grid2D;
 using static Astaroth.Utilities;
 
 namespace Astaroth_Test {

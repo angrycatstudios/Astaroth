@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using static Astaroth.Utilities;
 
-namespace Astaroth {
+namespace Astaroth.Grid2D {
 
 [Serializable()]
 public class PathFinderRectGrid2D {

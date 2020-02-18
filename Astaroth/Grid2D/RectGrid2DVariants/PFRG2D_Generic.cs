@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using static Astaroth.Utilities;
 
-namespace Astaroth {
+namespace Astaroth.Grid2D {
 
 public class PFRG2D_Generic : PathFinderRectGrid2D {
 
