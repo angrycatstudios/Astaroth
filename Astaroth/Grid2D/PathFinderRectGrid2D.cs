@@ -65,6 +65,7 @@ public class PathFinderRectGrid2D {
 			for (int y = 0; y < my; y++) {
 				map[x, y].SetProperty("isProcessed", false);
 				map[x, y].SetProperty("isPath", false);
+				map[x, y].SetProperty("isBetterCheckEnabled", Math.Sqrt(Math.Pow(x - endX, 2) + Math.Pow(y - endY, 2)) < options.isBetterCheckRadius);
 			}
 		}
 
@@ -72,6 +73,7 @@ public class PathFinderRectGrid2D {
 		if (options == null) options = new Options();
 		List<PathNode2D> toBeProcessed = new List<PathNode2D>();
 		List<PathNode2D> processed = new List<PathNode2D>();
+		List<PathNode2D> endPoints = new List<PathNode2D>();
 		map[startX, startY].SetProperty("isProcessed", true);
 
 		// Starting node
@@ -83,8 +85,7 @@ public class PathFinderRectGrid2D {
 
 		/// Find path
 		/// ---------
-		int pathFound = -1;
-		while (toBeProcessed.Count > 0 && pathFound == -1)
+		while (toBeProcessed.Count > 0 && endPoints.Count < options.maxResults)
 		{
 
 		// Sort open stack
@@ -92,9 +93,10 @@ public class PathFinderRectGrid2D {
 
 		// Process open stack
 		for (int i = toBeProcessed.Count - 1; i >= 0; i--) {
-			for (int j = 7; j >= 0; j--) {
 
-				PathNode2D node = toBeProcessed[i];
+			PathNode2D node = toBeProcessed[i];
+
+			for (int j = 7; j >= 0; j--) {
 
 				// Get direction
 				int d = dirRectGrid2DEnumHelper[node.Dir][j];
@@ -108,22 +110,30 @@ public class PathFinderRectGrid2D {
 
 				// Check conditions
 				PathNode2D mapNode = map[newX, newY];
-				if (mapNode.GetBool("isProcessed")) continue;
+				if (mapNode.GetBool("isProcessed") && (!mapNode.GetBool("isBetterCheckEnabled") || !IsBetterThan(node, mapNode))) continue;
 				if (!VerifyPassConditions(mapNode, node, d, passConditions)) continue;
 
 				// Process node
-				map[newX, newY].SetProperty("isProcessed", true);
 				PathNode2D nextNode = new PathNode2D(map[newX, newY]);
+				nextNode.SetProperty("isProcessed", true);
 				nextNode.SetProperty("parent", node.GetInt("stack"));
 				nextNode.SetProperty("stack", processed.Count);
 				SetDistance(nextNode, node);
 				AssignNodeProperties(nextNode, node, d, passConditions, pathWeights); // use this to propagate additional data like accumulated custom weights (number of direction changes, hazards encountered, etc.) from source to target node
 				processed.Add(nextNode);
-				toBeProcessed.Add(nextNode);
-				if (newX == endX && newY == endY) pathFound = processed.Count - 1;
+				map[newX, newY] = nextNode;
+
+				// Target found
+				if (nextNode.X == endX && nextNode.Y == endY) {
+					endPoints.Add(nextNode);
+				} else {
+					toBeProcessed.Add(nextNode);
+				}
 
 			}
+
 			toBeProcessed.RemoveAt(i);
+
 		}
 
 		}
@@ -133,12 +143,15 @@ public class PathFinderRectGrid2D {
 
 		/// Construct path
 		/// ---------
-		if (pathFound >= 0) {
+		if (endPoints.Count > 0) {
 
-		map[processed[pathFound].X, processed[pathFound].Y].SetProperty("isPath", true);
-		path.Add(processed[pathFound]);
+		SortOpenStack(ref endPoints, sortingOptions);
+		int pathFound = endPoints.Count - 1;
 
-		int parent = processed[pathFound].GetInt("parent");
+		map[endPoints[pathFound].X, endPoints[pathFound].Y].SetProperty("isPath", true);
+		path.Add(endPoints[pathFound]);
+
+		int parent = endPoints[pathFound].GetInt("parent");
 		do {
 			int px = processed[parent].X;
 			int py = processed[parent].Y;
@@ -183,6 +196,11 @@ public class PathFinderRectGrid2D {
 		node.Dir = d;
 	}
 
+	protected virtual bool IsBetterThan(PathNode2D a, PathNode2D b)
+	{
+		return (a.Dist + 1) < b.Dist;
+	}
+
 #endregion
 
 #region Miscellaneous
@@ -199,6 +217,8 @@ public class PathFinderRectGrid2D {
 	public class Options
 	{
 		public bool enableOpenStackSorting = false;
+		public int isBetterCheckRadius = 3;
+		public int maxResults = 3;
 	}
 
 #endregion

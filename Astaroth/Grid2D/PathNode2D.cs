@@ -11,10 +11,10 @@ public class PathNode2D {
 	public int Dist { get; set; }
 	public int Dir { get; set; }
 
-	protected Dictionary<string, int>		properties_i = new Dictionary<string, int>();
-	protected Dictionary<string, string>	properties_s = new Dictionary<string, string>();
-	protected Dictionary<string, float>		properties_f = new Dictionary<string, float>();
-	protected Dictionary<string, bool>		properties_b = new Dictionary<string, bool>();
+	protected Dictionary<string, int>			properties_i = new Dictionary<string, int>();
+	protected Dictionary<string, string>		properties_s = new Dictionary<string, string>();
+	protected Dictionary<string, float>			properties_f = new Dictionary<string, float>();
+	protected Dictionary<string, bool>			properties_b = new Dictionary<string, bool>();
 
 	public PathNode2D(int x, int y)
 	{
